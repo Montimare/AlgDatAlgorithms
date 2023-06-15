@@ -48,7 +48,7 @@ void stack_push(struct Stack *stack, int key)
     return;
 }
 
-int stack_pop(struct Stack *stack)
+int stack_pop(struct Stack *stack) //gibt key zurück, neuer head wird global gespeichert
 {
     if (stack->top <= -1)
     {
@@ -60,7 +60,8 @@ int stack_pop(struct Stack *stack)
     return tmp;
 }
 
-void stack_delete(struct Stack *stack)
+void stack_delete(struct Stack *stack)  //make recursive (but im too lazy)
+                                        //bessere variante: save adress next stack, free stack, go to next stack repeat (recursive)
 {
     while (stack != NULL)
     {
@@ -73,7 +74,7 @@ void stack_delete(struct Stack *stack)
     }
 }
 
-void stack_print(struct Stack *stack) //so bad make recursive (but im too lazy)
+void stack_print(struct Stack *stack) //make recursive (but im too lazy)
 {
     printf("Stack ist: ");
     printf("%d, ", stack->key);
@@ -86,7 +87,7 @@ void stack_print(struct Stack *stack) //so bad make recursive (but im too lazy)
     return;
 }
 
-void stack_print_tail(struct Stack *stack)
+void stack_print_tail(struct Stack *stack) //falsch verstanden, gibt einfach adresse von 2. element zurück (warum auch immer)
 {
     printf("Stack ist: ");
     while (stack->next != NULL)
@@ -97,4 +98,4 @@ void stack_print_tail(struct Stack *stack)
     return;
 }
 
-#endif
+#endif //__STACK_H__
