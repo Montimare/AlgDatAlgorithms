@@ -65,7 +65,7 @@ int stack_pop(struct Stack *stack)
         stack->top = 4;
     }
     int tmp = stack->data[stack->top];
-    stack->data[stack->top] = 0;
+    stack->data[stack->top] = 0; //nicht unbedint nötig, da push den wert hier einfach überschreibt
     stack->top--;
     return tmp;
 }
