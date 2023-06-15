@@ -2,26 +2,24 @@
 #include <stdlib.h>
 #ifndef __STACK_H__
 #define __STACK_H__
-#define MAX 5
 
 struct Stack; // forward declaration
 
-struct Stack *stack_init();                    // Legt einen neuen Stack an
 void stack_push(struct Stack *stack, int key); // Legt ein Element auf den Stack
 int stack_pop(struct Stack *stack);            // Entnimmt ein Element vom Stack
 void stack_delete(struct Stack *stack);        // Löscht den Stack
 void stack_print(struct Stack *stack);         // Print Stack
+void stack_print_tail();                       // Print alles außer head
 
 int main()
 {
-    struct Stack *stack = stack_init();
     stack_print(stack);
     stack_push(stack, 1);
     stack_push(stack, 2);
-    stack_push(stack, 1);
-    stack_push(stack, 2);
-    stack_push(stack, 1);
-    stack_push(stack, 2);
+    stack_push(stack, 3);
+    stack_push(stack, 4);
+    stack_push(stack, 5);
+    stack_push(stack, 6);
     stack_print(stack);
     printf("popped number is %d.\n", stack_pop(stack));
     stack_delete(stack);
@@ -29,17 +27,9 @@ int main()
 
 struct Stack
 {
-    int data[MAX];
-    int top;
+    int key;
+    struct Stack *next;
 };
-
-struct Stack *stack_init()
-{
-    struct Stack *stack = (struct Stack *)malloc(sizeof(struct Stack));
-    stack->top = 0;
-
-    return stack;
-}
 
 void stack_push(struct Stack *stack, int key)
 {
@@ -72,14 +62,36 @@ int stack_pop(struct Stack *stack)
 
 void stack_delete(struct Stack *stack)
 {
-    free(stack);
+    while (stack != NULL)
+    {
+        struct Stack *head = stack;
+        while (head->next != NULL)
+        {
+            head = head -> next;
+        }
+        free(head);
+    }
 }
 
-void stack_print(struct Stack *stack){
+void stack_print(struct Stack *stack) //so bad make recursive (but im too lazy)
+{
     printf("Stack ist: ");
-    for (int i = 0; i < 5; i++)
+    printf("%d, ", stack->key);
+    while (stack->next != NULL)
     {
-        printf("%d, ",stack->data[i]);
+        printf("%d, ", stack->key);
+        stack = stack->next;
+    }
+    printf("\n");
+    return;
+}
+
+void stack_print_tail(struct Stack *stack)
+{
+    printf("Stack ist: ");
+    while (stack->next != NULL)
+    {
+        printf("%d, ", stack->key);
     }
     printf("\n");
     return;
