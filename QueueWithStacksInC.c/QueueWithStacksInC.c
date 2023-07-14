@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Stack{
+struct Stack
+{
     int key;
     struct Stack *next;
 };
@@ -9,20 +10,28 @@ struct Stack{
 int poppedNumber;
 int dequeuedNumber;
 
-struct Stack* createStack(){
+struct Stack *createStack()
+{
     struct Stack *head = malloc(sizeof(struct Stack));
-    head->key = 0;
+    head->key = NULL;
     head->next = NULL;
     return head;
 }
 
-struct Stack* pop(struct Stack* head){
-    poppedNumber = head -> key;
+struct Stack *pop(struct Stack *head)
+{
+    poppedNumber = head->key;
     head = head->next;
     return head;
 }
 
-struct Stack* push(struct Stack* head, int key){
+struct Stack *push(struct Stack *head, int key)
+{
+    if (head->key == NULL)
+    {
+        head->key = key;
+        return head;
+    }
     struct Stack *newHead = malloc(sizeof(struct Stack));
     newHead->key = key;
     newHead->next = head;
@@ -30,44 +39,65 @@ struct Stack* push(struct Stack* head, int key){
     return head;
 }
 
-struct Stack* enqueue(struct Stack* head1, struct Stack* head2, int key){
+void printStack(struct Stack *head)
+{
+    printf("Stack top to bottom:\n");
+    struct Stack *headtmp = head;
+    if (headtmp != NULL)
+    {
+        printf("%d, ", headtmp->key);
+        while (headtmp->next != NULL)
+        {
+            headtmp = headtmp->next;
+            printf("%d, ", headtmp->key);
+        }
+    }
+    printf("\n");
+    return;
+}
+
+struct Stack *enqueue(struct Stack *head1, struct Stack *head2, int key)
+{
     if (head2 == NULL)
     {
         /* code */
     }
-    
 }
 
-struct Stack* dequeue(){
-
+struct Stack *dequeue()
+{
 }
 
-int main(){
+int main()
+{
     struct Stack *stack1 = createStack();
     struct Stack *stack2 = createStack();
     while (1)
     {
         int input;
-        printf("Wähle Option aus:\n0: \n1: \n2: \n3: ");
+        printf("Wähle Option aus:\n0: print \n1: push \n2: pop \n3: \n");
         scanf("%d", &input);
         switch (input)
         {
         case 0:
-            /* code */
+            printStack(stack1);
             break;
         case 1:
-            /* code */
+            int input2;
+            printf("Gib key: ");
+            scanf("%d", &input2);
+            stack1 = push(stack1, input2);
             break;
         case 2:
-            /* code */
+            stack1 = pop(stack1);
+            printf("popped: %d\n", poppedNumber);
             break;
         case 3:
             /* code */
             break;
-        
+
         default:
             return 0;
         }
     }
-    
 }
