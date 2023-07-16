@@ -21,8 +21,17 @@ struct Stack *createStack()
 struct Stack *pop(struct Stack *head)
 {
     poppedNumber = head->key;
-    head = head->next;
-    return head;
+    if (head->next != NULL)
+    {
+        struct Stack *newhead = head->next;
+        free(head);
+        return newhead;
+    }
+    else
+    {
+        head->key = NULL;
+        return head;
+    }
 }
 
 struct Stack *push(struct Stack *head, int key)
@@ -56,16 +65,32 @@ void printStack(struct Stack *head)
     return;
 }
 
-struct Stack *enqueue(struct Stack *head1, struct Stack *head2, int key)
+void enqueue(struct Stack **head1, struct Stack **head2, int key)
 {
-    if (head2 == NULL)
+    if ((*head2)->key == NULL)
     {
-        /* code */
+        *head1 = push(*head1, key);
+    } else
+    {
+        while ((*head2)->key != NULL)
+        {
+            *head2 = pop(*head2);
+            *head1 = push(*head1, poppedNumber);
+        }
+        *head1 = push(*head1, key);
+    }
+
+    while ((*head1)->key != NULL)
+    {
+        *head1 = pop(*head1);
+        *head2 = push(*head2, poppedNumber);
     }
 }
 
-struct Stack *dequeue()
+void dequeue(struct Stack **head2)
 {
+    pop(*head2);
+    dequeuedNumber = poppedNumber;
 }
 
 int main()
@@ -75,27 +100,24 @@ int main()
     while (1)
     {
         int input;
-        printf("Wähle Option aus:\n0: print \n1: push \n2: pop \n3: \n");
+        printf("Wähle eine Option aus:\n0: print\n1: enqueue\n2: dequeue");
         scanf("%d", &input);
         switch (input)
         {
-        case 0:
-            printStack(stack1);
-            break;
         case 1:
             int input2;
             printf("Gib key: ");
             scanf("%d", &input2);
-            stack1 = push(stack1, input2);
+            enqueue(&stack1, &stack2, input2);
+            // break;
+        case 0:
+            printStack(stack1);
+            printStack(stack2);
             break;
         case 2:
-            stack1 = pop(stack1);
+            dequeue(&stack2);
             printf("popped: %d\n", poppedNumber);
             break;
-        case 3:
-            /* code */
-            break;
-
         default:
             return 0;
         }
