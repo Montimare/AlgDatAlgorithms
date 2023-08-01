@@ -3,7 +3,7 @@
         {
             "type": "cppbuild",
             "label": "C/C++: gcc.exe build active file",
-            "command": "C:\\.Arbeitszeugs\\Coding\\compiler\\mingw64\\bin\\gcc.exe",
+            "command": "C:\\Programmieren\\Sprachen\\C_Compiler\\mingw64\\bin\\gcc.exe",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
